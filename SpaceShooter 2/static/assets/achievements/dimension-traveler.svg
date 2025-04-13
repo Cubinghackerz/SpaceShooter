@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base Circle -->
+  <circle class="badge-base" cx="50" cy="50" r="45" fill="#2a2a4a" stroke-width="2" stroke="#9900cc">
+    <animate attributeName="stroke" values="#9900cc;#aa55dd;#9900cc" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Inner Circle with Glow -->
+  <circle class="badge-inner" cx="50" cy="50" r="35" fill="#2a203a" stroke-width="2" stroke="#aa55dd">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Portal Icon -->
+  <g class="badge-icon">
+    <!-- Outer Vortex -->
+    <ellipse cx="50" cy="50" rx="25" ry="20" fill="none" stroke="#aa55dd" stroke-width="1.5">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite" />
+      <animate attributeName="stroke" values="#aa55dd;#cc88ee;#8800bb;#aa55dd" dur="8s" repeatCount="indefinite" />
+      <animate attributeName="rx" values="25;23;25" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="ry" values="20;22;20" dur="6s" repeatCount="indefinite" />
+    </ellipse>
+    
+    <!-- Middle Vortex -->
+    <ellipse cx="50" cy="50" rx="20" ry="15" fill="none" stroke="#cc66ff" stroke-width="1.5">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="-360 50 50" dur="8s" repeatCount="indefinite" />
+      <animate attributeName="stroke" values="#cc66ff;#dd99ff;#bb33ee;#cc66ff" dur="6s" repeatCount="indefinite" />
+      <animate attributeName="rx" values="20;18;20" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="ry" values="15;17;15" dur="7s" repeatCount="indefinite" />
+    </ellipse>
+    
+    <!-- Inner Vortex -->
+    <ellipse cx="50" cy="50" rx="15" ry="10" fill="none" stroke="#ee99ff" stroke-width="1.5">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="6s" repeatCount="indefinite" />
+      <animate attributeName="stroke" values="#ee99ff;#ffccff;#dd77ff;#ee99ff" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="rx" values="15;14;15" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="ry" values="10;11;10" dur="4s" repeatCount="indefinite" />
+    </ellipse>
+    
+    <!-- Center Glow -->
+    <circle cx="50" cy="50" r="5" fill="#ffffff">
+      <animate attributeName="fill" values="#ffffff;#ffccff;#ffffff" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Swirling Stars -->
+  <g class="badge-stars">
+    <path d="M50,35 L52,37 L50,39 L48,37 Z" fill="#ffffff">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
+    </path>
+    <path d="M50,65 L52,63 L50,61 L48,63 Z" fill="#ffffff">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite" begin="0.3s" />
+    </path>
+    <path d="M35,50 L37,52 L39,50 L37,48 Z" fill="#ffffff">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.4s" repeatCount="indefinite" begin="0.6s" />
+    </path>
+    <path d="M65,50 L63,52 L61,50 L63,48 Z" fill="#ffffff">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite" begin="0.9s" />
+    </path>
+  </g>
+  
+  <!-- Outer glow effect -->
+  <circle class="badge-glow" cx="50" cy="50" r="48" fill="none" stroke="#aa55dd" stroke-width="1" stroke-opacity="0.3">
+    <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="r" values="46;48;46" dur="4s" repeatCount="indefinite" />
+  </circle>
+</svg>

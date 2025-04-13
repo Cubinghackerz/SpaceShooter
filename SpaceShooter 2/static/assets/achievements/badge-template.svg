@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base Circle -->
+  <circle class="badge-base" cx="50" cy="50" r="45" fill="#2a3a4a" stroke-width="2" stroke="#0088cc"/>
+  
+  <!-- Inner Circle with Glow -->
+  <circle class="badge-inner" cx="50" cy="50" r="35" fill="#1c2c3c" stroke-width="2" stroke="#00ccff">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Icon Placeholder - to be replaced with specific achievement icon -->
+  <g class="badge-icon" fill="#ffffff">
+    <!-- Default star icon -->
+    <path d="M50,20 L57.5,35.8 L75,38.2 L62.5,50.5 L65.5,67.8 L50,59.8 L34.5,67.8 L37.5,50.5 L25,38.2 L42.5,35.8 Z">
+      <animate attributeName="fill-opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Shimmer Effect -->
+  <g class="badge-shimmer">
+    <path d="M30,20 Q50,15 70,30 A40,40 0 0,1 30,70 Q50,60 70,80" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.3">
+      <animate attributeName="stroke-opacity" values="0.1;0.5;0.1" dur="4s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Particles - animated dots -->
+  <g class="badge-particles">
+    <circle cx="35" cy="30" r="1.5" fill="#00ccff">
+      <animate attributeName="cy" values="30;25;30" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="35;37;35" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="65" cy="30" r="1.5" fill="#00ccff">
+      <animate attributeName="cy" values="30;35;30" dur="2.5s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="65;63;65" dur="3.5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="50" cy="75" r="1.5" fill="#00ccff">
+      <animate attributeName="cy" values="75;70;75" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="50;52;50" dur="2.7s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Outer glow effect -->
+  <circle class="badge-glow" cx="50" cy="50" r="48" fill="none" stroke="#00ccff" stroke-width="1" stroke-opacity="0.3">
+    <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="r" values="46;48;46" dur="4s" repeatCount="indefinite" />
+  </circle>
+</svg>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base Circle -->
+  <circle class="badge-base" cx="50" cy="50" r="45" fill="#3a2a3a" stroke-width="2" stroke="#dd9900">
+    <animate attributeName="stroke" values="#dd9900;#ffcc00;#dd9900" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Inner Circle -->
+  <circle class="badge-inner" cx="50" cy="50" r="35" fill="#2a1a2a" stroke-width="2" stroke="#cc8800">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Trophy Design -->
+  <g class="badge-icon">
+    <!-- Trophy Cup -->
+    <path d="M40,35 L60,35 L60,50 C60,55 55,60 50,60 C45,60 40,55 40,50 Z" fill="#ffcc00">
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Trophy Handles -->
+    <path d="M40,40 C35,40 33,45 35,48 C37,50 40,48 40,45 Z" fill="#ffcc00">
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="3.2s" repeatCount="indefinite" begin="0.2s" />
+    </path>
+    <path d="M60,40 C65,40 67,45 65,48 C63,50 60,48 60,45 Z" fill="#ffcc00">
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="3.4s" repeatCount="indefinite" begin="0.4s" />
+    </path>
+    
+    <!-- Trophy Base -->
+    <rect x="45" y="60" width="10" height="3" fill="#ffcc00">
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="3.6s" repeatCount="indefinite" begin="0.6s" />
+    </rect>
+    <rect x="42" y="63" width="16" height="3" fill="#ffcc00">
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="3.8s" repeatCount="indefinite" begin="0.8s" />
+    </rect>
+    
+    <!-- Trophy Shine -->
+    <path d="M45,40 L52,40 L52,50 C52,52 51,54 50,54 C49,54 48,52 48,50 Z" fill="#ffffff" fill-opacity="0.3">
+      <animate attributeName="fill-opacity" values="0.3;0.5;0.3" dur="2s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Trophy Star -->
+    <path d="M50,42 L52,46 L56,47 L53,50 L54,54 L50,52 L46,54 L47,50 L44,47 L48,46 Z" fill="#ffffff">
+      <animate attributeName="fill" values="#ffffff;#ffffcc;#ffffff" dur="2s" repeatCount="indefinite" />
+      <animateTransform attributeName="transform" type="rotate" from="0 50 48" to="360 50 48" dur="10s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Score Numbers -->
+  <g class="score-numbers">
+    <!-- '10000' Text -->
+    <g transform="translate(50, 75)" text-anchor="middle">
+      <text font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#ffcc00">10000</text>
+    </g>
+    
+    <!-- Flying Score Numbers -->
+    <g>
+      <text x="30" y="30" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#ffcc00" opacity="0.7">+100</text>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 5,-5; 10,-10" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite" />
+    </g>
+    <g>
+      <text x="65" y="35" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#ffcc00" opacity="0.7">+250</text>
+      <animateTransform attributeName="transform" type="translate" values="0,0; -5,-5; -10,-10" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+      <animate attributeName="opacity" values="0.7;0;0.7" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+    </g>
+    <g>
+      <text x="40" y="25" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#ffcc00" opacity="0.7">+500</text>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 3,-8; 6,-16" dur="4s" repeatCount="indefinite" begin="1s" />
+      <animate attributeName="opacity" values="0.7;0;0.7" dur="4s" repeatCount="indefinite" begin="1s" />
+    </g>
+  </g>
+  
+  <!-- Gold Coins -->
+  <g class="coins">
+    <!-- Coin 1 -->
+    <circle cx="30" cy="55" r="5" fill="#ffcc00" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="cy" values="55;53;55" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <line x1="30" y1="52" x2="30" y2="58" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="y1" values="52;50;52" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="y2" values="58;56;58" dur="2s" repeatCount="indefinite" />
+    </line>
+    
+    <!-- Coin 2 -->
+    <circle cx="70" cy="55" r="5" fill="#ffcc00" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="cy" values="55;57;55" dur="2.2s" repeatCount="indefinite" begin="0.2s" />
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="2.2s" repeatCount="indefinite" begin="0.2s" />
+    </circle>
+    <line x1="70" y1="52" x2="70" y2="58" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="y1" values="52;54;52" dur="2.2s" repeatCount="indefinite" begin="0.2s" />
+      <animate attributeName="y2" values="58;60;58" dur="2.2s" repeatCount="indefinite" begin="0.2s" />
+    </line>
+    
+    <!-- Coin 3 -->
+    <circle cx="25" cy="45" r="4" fill="#ffcc00" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="cy" values="45;43;45" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+    </circle>
+    <line x1="25" y1="43" x2="25" y2="47" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="y1" values="43;41;43" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+      <animate attributeName="y2" values="47;45;47" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+    </line>
+    
+    <!-- Coin 4 -->
+    <circle cx="75" cy="45" r="4" fill="#ffcc00" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="cy" values="45;47;45" dur="2.6s" repeatCount="indefinite" begin="0.6s" />
+      <animate attributeName="fill" values="#ffcc00;#ffe066;#ffcc00" dur="2.6s" repeatCount="indefinite" begin="0.6s" />
+    </circle>
+    <line x1="75" y1="43" x2="75" y2="47" stroke="#cc8800" stroke-width="0.5">
+      <animate attributeName="y1" values="43;45;43" dur="2.6s" repeatCount="indefinite" begin="0.6s" />
+      <animate attributeName="y2" values="47;49;47" dur="2.6s" repeatCount="indefinite" begin="0.6s" />
+    </line>
+  </g>
+  
+  <!-- Sparkle Effect -->
+  <g class="sparkles">
+    <!-- Sparkle 1 -->
+    <path d="M25,30 L27,32 L25,34 L23,32 Z" fill="#ffffff">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite" />
+      <animateTransform attributeName="transform" type="rotate" from="0 25 32" to="360 25 32" dur="6s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Sparkle 2 -->
+    <path d="M75,30 L77,32 L75,34 L73,32 Z" fill="#ffffff">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="1.7s" repeatCount="indefinite" begin="0.2s" />
+      <animateTransform attributeName="transform" type="rotate" from="0 75 32" to="360 75 32" dur="6s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Sparkle 3 -->
+    <path d="M37,25 L39,27 L37,29 L35,27 Z" fill="#ffffff">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="1.9s" repeatCount="indefinite" begin="0.4s" />
+      <animateTransform attributeName="transform" type="rotate" from="0 37 27" to="360 37 27" dur="6s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Sparkle 4 -->
+    <path d="M63,25 L65,27 L63,29 L61,27 Z" fill="#ffffff">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.1s" repeatCount="indefinite" begin="0.6s" />
+      <animateTransform attributeName="transform" type="rotate" from="0 63 27" to="360 63 27" dur="6s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Outer glow effect -->
+  <circle class="badge-glow" cx="50" cy="50" r="48" fill="none" stroke="#ffcc00" stroke-width="1" stroke-opacity="0.3">
+    <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="r" values="46;48;46" dur="4s" repeatCount="indefinite" />
+  </circle>
+</svg>

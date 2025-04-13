@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base Circle -->
+  <circle class="badge-base" cx="50" cy="50" r="45" fill="#3a3a2a" stroke-width="2" stroke="#ffcc00">
+    <animate attributeName="stroke" values="#ffcc00;#ffee33;#ffcc00" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Inner Circle -->
+  <circle class="badge-inner" cx="50" cy="50" r="35" fill="#2a2a1a" stroke-width="2" stroke="#eeaa00">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Lightning Design -->
+  <g class="badge-icon">
+    <!-- Main Lightning Bolt -->
+    <path d="M50,20 L40,45 L55,45 L30,80" stroke="#ffdd00" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <animate attributeName="stroke" values="#ffdd00;#ffffff;#ffdd00" dur="1.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Secondary Lightning Bolt 1 -->
+    <path d="M55,30 L50,45 L60,50 L45,70" stroke="#ffdd00" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <animate attributeName="stroke" values="#ffdd00;#ffffff;#ffdd00" dur="1.7s" repeatCount="indefinite" begin="0.2s" />
+    </path>
+    
+    <!-- Secondary Lightning Bolt 2 -->
+    <path d="M45,30 L50,40 L40,50 L55,65" stroke="#ffdd00" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <animate attributeName="stroke" values="#ffdd00;#ffffff;#ffdd00" dur="1.9s" repeatCount="indefinite" begin="0.4s" />
+    </path>
+    
+    <!-- Lightning Glow -->
+    <path d="M50,20 L40,45 L55,45 L30,80" stroke="#ffee88" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.3" filter="blur(2px)">
+      <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="1.5s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Chain Links -->
+  <g class="chain-links">
+    <!-- Link 1 -->
+    <ellipse cx="35" cy="35" rx="7" ry="5" transform="rotate(-45 35 35)" fill="none" stroke="#ffcc00" stroke-width="2">
+      <animate attributeName="stroke" values="#ffcc00;#ffee66;#ffcc00" dur="2s" repeatCount="indefinite" />
+    </ellipse>
+    
+    <!-- Link 2 -->
+    <ellipse cx="45" cy="45" rx="7" ry="5" transform="rotate(45 45 45)" fill="none" stroke="#ffcc00" stroke-width="2">
+      <animate attributeName="stroke" values="#ffcc00;#ffee66;#ffcc00" dur="2.2s" repeatCount="indefinite" begin="0.2s" />
+    </ellipse>
+    
+    <!-- Link 3 -->
+    <ellipse cx="55" cy="55" rx="7" ry="5" transform="rotate(-45 55 55)" fill="none" stroke="#ffcc00" stroke-width="2">
+      <animate attributeName="stroke" values="#ffcc00;#ffee66;#ffcc00" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+    </ellipse>
+    
+    <!-- Link 4 -->
+    <ellipse cx="65" cy="65" rx="7" ry="5" transform="rotate(45 65 65)" fill="none" stroke="#ffcc00" stroke-width="2">
+      <animate attributeName="stroke" values="#ffcc00;#ffee66;#ffcc00" dur="2.6s" repeatCount="indefinite" begin="0.6s" />
+    </ellipse>
+    
+    <!-- Link Connecting Glow -->
+    <line x1="40" y1="40" x2="50" y2="50" stroke="#ffee88" stroke-width="1" stroke-opacity="0.5">
+      <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" />
+    </line>
+    <line x1="50" y1="50" x2="60" y2="60" stroke="#ffee88" stroke-width="1" stroke-opacity="0.5">
+      <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="1.2s" repeatCount="indefinite" begin="0.2s" />
+    </line>
+  </g>
+  
+  <!-- Energy Balls at Chain Intersections -->
+  <g class="energy-nodes">
+    <!-- Energy Ball 1 -->
+    <circle cx="35" cy="35" r="3" fill="#ffffff">
+      <animate attributeName="r" values="3;4;3" dur="1s" repeatCount="indefinite" />
+      <animate attributeName="fill" values="#ffffff;#ffee88;#ffffff" dur="1s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Energy Ball 2 -->
+    <circle cx="45" cy="45" r="3" fill="#ffffff">
+      <animate attributeName="r" values="3;4;3" dur="1.2s" repeatCount="indefinite" begin="0.2s" />
+      <animate attributeName="fill" values="#ffffff;#ffee88;#ffffff" dur="1.2s" repeatCount="indefinite" begin="0.2s" />
+    </circle>
+    
+    <!-- Energy Ball 3 -->
+    <circle cx="55" cy="55" r="3" fill="#ffffff">
+      <animate attributeName="r" values="3;4;3" dur="1.4s" repeatCount="indefinite" begin="0.4s" />
+      <animate attributeName="fill" values="#ffffff;#ffee88;#ffffff" dur="1.4s" repeatCount="indefinite" begin="0.4s" />
+    </circle>
+    
+    <!-- Energy Ball 4 -->
+    <circle cx="65" cy="65" r="3" fill="#ffffff">
+      <animate attributeName="r" values="3;4;3" dur="1.6s" repeatCount="indefinite" begin="0.6s" />
+      <animate attributeName="fill" values="#ffffff;#ffee88;#ffffff" dur="1.6s" repeatCount="indefinite" begin="0.6s" />
+    </circle>
+  </g>
+  
+  <!-- Electricity Sparks -->
+  <g class="sparks">
+    <!-- Spark 1 -->
+    <path d="M35,31 L38,28" stroke="#ffffff" stroke-width="1">
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="0.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Spark 2 -->
+    <path d="M45,41 L48,38" stroke="#ffffff" stroke-width="1">
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="0.6s" repeatCount="indefinite" begin="0.1s" />
+    </path>
+    
+    <!-- Spark 3 -->
+    <path d="M55,51 L58,48" stroke="#ffffff" stroke-width="1">
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="0.7s" repeatCount="indefinite" begin="0.2s" />
+    </path>
+    
+    <!-- Spark 4 -->
+    <path d="M65,61 L68,58" stroke="#ffffff" stroke-width="1">
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite" begin="0.3s" />
+    </path>
+  </g>
+  
+  <!-- Background Energy Field -->
+  <g class="energy-field">
+    <!-- Energy Waves -->
+    <circle cx="50" cy="50" r="25" fill="none" stroke="#ffcc00" stroke-width="0.5" stroke-dasharray="1,1">
+      <animate attributeName="r" values="25;35;25" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="stroke-opacity" values="0.3;0.1;0.3" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="50" cy="50" r="20" fill="none" stroke="#ffcc00" stroke-width="0.5" stroke-dasharray="1,1">
+      <animate attributeName="r" values="20;30;20" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="stroke-opacity" values="0.4;0.2;0.4" dur="4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="50" cy="50" r="15" fill="none" stroke="#ffcc00" stroke-width="0.5" stroke-dasharray="1,1">
+      <animate attributeName="r" values="15;25;15" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="stroke-opacity" values="0.5;0.3;0.5" dur="5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Timer Effect (3 seconds) -->
+  <g class="timer">
+    <path d="M75,35 C78,35 78,40 75,40 L70,40 C67,40 67,35 70,35 Z" fill="#eeeeee">
+      <animate attributeName="fill" values="#eeeeee;#ffeeaa;#eeeeee" dur="2s" repeatCount="indefinite" />
+    </path>
+    <text x="73" y="39" font-family="Arial, sans-serif" font-size="6" text-anchor="middle" fill="#333333">3s</text>
+  </g>
+  
+  <!-- Combo Counter -->
+  <g class="combo-counter">
+    <path d="M25,35 C22,35 22,40 25,40 L30,40 C33,40 33,35 30,35 Z" fill="#eeeeee">
+      <animate attributeName="fill" values="#eeeeee;#ffeeaa;#eeeeee" dur="2s" repeatCount="indefinite" begin="0.5s" />
+    </path>
+    <text x="28" y="39" font-family="Arial, sans-serif" font-size="6" text-anchor="middle" fill="#333333">x5</text>
+  </g>
+  
+  <!-- Outer glow effect -->
+  <circle class="badge-glow" cx="50" cy="50" r="48" fill="none" stroke="#ffcc00" stroke-width="1" stroke-opacity="0.3">
+    <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="r" values="46;48;46" dur="4s" repeatCount="indefinite" />
+  </circle>
+</svg>

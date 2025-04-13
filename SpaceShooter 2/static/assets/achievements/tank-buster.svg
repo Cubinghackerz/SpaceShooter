@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base Circle -->
+  <circle class="badge-base" cx="50" cy="50" r="45" fill="#2a2a3a" stroke-width="2" stroke="#9966cc">
+    <animate attributeName="stroke" values="#9966cc;#bb88ee;#9966cc" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Inner Circle -->
+  <circle class="badge-inner" cx="50" cy="50" r="35" fill="#1a1a2a" stroke-width="2" stroke="#8855aa">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Shield Design -->
+  <g class="badge-icon">
+    <!-- Shield Shape -->
+    <path d="M50,20 L65,25 C65,50 65,60 50,75 C35,60 35,50 35,25 Z" fill="#7744aa">
+      <animate attributeName="fill" values="#7744aa;#9966cc;#7744aa" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Shield Border -->
+    <path d="M50,20 L65,25 C65,50 65,60 50,75 C35,60 35,50 35,25 Z" fill="none" stroke="#aa77dd" stroke-width="1.5">
+      <animate attributeName="stroke" values="#aa77dd;#cc99ee;#aa77dd" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Shield Shine Effect -->
+    <path d="M50,20 L65,25 C65,50 65,60 50,75 C35,60 35,50 35,25 Z" fill="url(#shieldGradient)" fill-opacity="0.5">
+      <animate attributeName="fill-opacity" values="0.5;0.7;0.5" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Shield Inner Design -->
+    <path d="M50,25 L60,28 C60,48 60,55 50,67 C40,55 40,48 40,28 Z" fill="#9955cc" stroke="#bb88ee" stroke-width="0.5">
+      <animate attributeName="fill" values="#9955cc;#aa66dd;#9955cc" dur="2.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Central Break Line -->
+    <line x1="40" y1="40" x2="60" y2="40" stroke="#dd99ff" stroke-width="2" stroke-dasharray="1,1">
+      <animate attributeName="stroke" values="#dd99ff;#eeccff;#dd99ff" dur="2s" repeatCount="indefinite" />
+    </line>
+    
+    <!-- Cracked Shield Effect -->
+    <path d="M50,40 L50,67" stroke="#ffccff" stroke-width="1.5">
+      <animate attributeName="stroke" values="#ffccff;#ffffff;#ffccff" dur="2s" repeatCount="indefinite" />
+    </path>
+    <path d="M45,40 L48,48" stroke="#ffccff" stroke-width="1">
+      <animate attributeName="stroke" values="#ffccff;#ffffff;#ffccff" dur="2.2s" repeatCount="indefinite" begin="0.2s" />
+    </path>
+    <path d="M55,40 L52,48" stroke="#ffccff" stroke-width="1">
+      <animate attributeName="stroke" values="#ffccff;#ffffff;#ffccff" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+    </path>
+    
+    <!-- Shield Glow -->
+    <path d="M50,20 L65,25 C65,50 65,60 50,75 C35,60 35,50 35,25 Z" fill="none" stroke="#cc88ff" stroke-width="0.5" filter="blur(1px)">
+      <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Projectile Impact Effect -->
+  <g class="impact-effect">
+    <!-- Projectile -->
+    <circle cx="25" cy="50" r="3" fill="#ff6600">
+      <animate attributeName="cx" values="25;42;42" dur="1.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="1;1;0" dur="1.5s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Impact Burst -->
+    <circle cx="42" cy="50" r="0" fill="#ffaa00">
+      <animate attributeName="r" values="0;0;8;0" dur="1.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0;0;1;0" dur="1.5s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Splash Lines -->
+    <line x1="42" y1="50" x2="42" y2="50" stroke="#ffcc00" stroke-width="1">
+      <animate attributeName="x2" values="42;42;50" dur="1.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0;0;1;0" dur="1.5s" repeatCount="indefinite" />
+    </line>
+    <line x1="42" y1="50" x2="42" y2="50" stroke="#ffcc00" stroke-width="1">
+      <animate attributeName="x2" values="42;42;34" dur="1.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0;0;1;0" dur="1.5s" repeatCount="indefinite" />
+    </line>
+    <line x1="42" y1="50" x2="42" y2="50" stroke="#ffcc00" stroke-width="1">
+      <animate attributeName="y2" values="50;50;58" dur="1.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0;0;1;0" dur="1.5s" repeatCount="indefinite" />
+    </line>
+    <line x1="42" y1="50" x2="42" y2="50" stroke="#ffcc00" stroke-width="1">
+      <animate attributeName="y2" values="50;50;42" dur="1.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0;0;1;0" dur="1.5s" repeatCount="indefinite" />
+    </line>
+  </g>
+  
+  <!-- Emerging Energy -->
+  <g class="energy-effect">
+    <circle cx="50" cy="50" r="15" fill="none" stroke="#ee99ff" stroke-width="0.5">
+      <animate attributeName="r" values="15;25;15" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Energy Pulses -->
+    <circle cx="50" cy="50" r="10" fill="none" stroke="#ffaaff" stroke-width="0.5">
+      <animate attributeName="r" values="10;20;10" dur="2.5s" repeatCount="indefinite" />
+      <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Central Energy -->
+    <circle cx="50" cy="50" r="5" fill="#ffffff">
+      <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="fill-opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Particle Effects -->
+  <g class="particles">
+    <!-- Shield Fragments -->
+    <circle cx="58" cy="42" r="1" fill="#bb99ff">
+      <animate attributeName="cx" values="58;62;58" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="42;38;42" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="42" cy="58" r="1" fill="#bb99ff">
+      <animate attributeName="cx" values="42;38;42" dur="3.2s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="58;62;58" dur="3.2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="1;0.5;1" dur="3.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="42" cy="42" r="1" fill="#cc99ff">
+      <animate attributeName="cx" values="42;38;42" dur="2.8s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="42;38;42" dur="2.8s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="1;0.5;1" dur="2.8s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="58" cy="58" r="1" fill="#cc99ff">
+      <animate attributeName="cx" values="58;62;58" dur="3.4s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="58;62;58" dur="3.4s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="1;0.5;1" dur="3.4s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Defs for gradient -->
+  <defs>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7">
+        <animate attributeName="stop-opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="#aa77dd" stop-opacity="0.1">
+        <animate attributeName="stop-opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer glow effect -->
+  <circle class="badge-glow" cx="50" cy="50" r="48" fill="none" stroke="#aa77dd" stroke-width="1" stroke-opacity="0.3">
+    <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="r" values="46;48;46" dur="4s" repeatCount="indefinite" />
+  </circle>
+</svg>

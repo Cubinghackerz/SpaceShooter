@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Shooter</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        :root {
+            /* Theme variables - will be set by cosmic_theme_selector.js */
+            --theme-primary: #3498db;
+            --theme-secondary: #2ecc71;
+            --theme-accent: #9b59b6;
+            --theme-text: #ffffff;
+            --theme-enemy: #e74c3c;
+            --theme-player: #3498db;
+            --theme-background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="welcomeModal" class="welcome-modal">
+            <div class="welcome-content">
+                <!-- Main Game Title -->
+                <h1 class="game-title mb-4">Space Shooter</h1>
+                
+                <div class="experimental-notice mb-3">
+                    <div class="alert alert-warning">
+                        <strong>EXPERIMENTAL GAME</strong> - This game is in active development. Features may change and bugs may occur.
+                    </div>
+                </div>
+                
+                <div class="events-announcement">
+                    <h4>NEW SPECIAL EVENTS!</h4>
+                    <p>Face powerful Radiant and Lunar enemies with unique abilities!</p>
+                    <div class="events-icons">
+                        <div class="event-icon radiant-icon" title="Radiant Event">🔥</div>
+                        <div class="event-icon lunar-icon" title="Lunar Event">❄️</div>
+                    </div>
+                </div>
+                <div class="controls-info">
+                    <h4>Controls:</h4>
+                    <ul>
+                        <li style="--i:0">Mouse Movement: Aim your ship</li>
+                        <li style="--i:1">Click: Shoot</li>
+                        <li style="--i:2">WASD/Arrow Keys: Move ship</li>
+                        <li style="--i:3">Q: Toggle Auto-Shoot</li>
+                        <li style="--i:4">E: Toggle Auto-Spin</li>
+                        <li style="--i:5">V: View Upgrade Tree</li>
+                        <li style="--i:6">M: Toggle Debug Info</li>
+                    </ul>
+                    <div class="mt-4">
+                        <p class="welcome-description">Collect points by destroying enemies and upgrade your ship to become more powerful!</p>
+                        
+                        <div class="difficulty-selection mb-3">
+                            <h5>Select Difficulty:</h5>
+                            <div class="btn-group difficulty-buttons" role="group" aria-label="Difficulty selection">
+                                <input type="radio" class="btn-check" name="difficulty" id="difficultyEasy" value="easy" checked>
+                                <label class="btn btn-outline-success" for="difficultyEasy">Easy</label>
+                                
+                                <input type="radio" class="btn-check" name="difficulty" id="difficultyMedium" value="medium">
+                                <label class="btn btn-outline-warning" for="difficultyMedium">Medium</label>
+                                
+                                <input type="radio" class="btn-check" name="difficulty" id="difficultyHard" value="hard">
+                                <label class="btn btn-outline-danger" for="difficultyHard">Hard</label>
+                            </div>
+                        </div>
+                        
+                        <div class="game-options mb-4">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="adaptiveDifficultyToggle" checked>
+                                <label class="form-check-label" for="adaptiveDifficultyToggle">Enable Adaptive Difficulty</label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="performanceModeToggle">
+                                <label class="form-check-label" for="performanceModeToggle">Performance Mode</label>
+                                <i class="ms-1 text-info" id="performanceModeInfo" style="cursor: pointer;">ⓘ</i>
+                            </div>
+                            
+                            <div id="performanceModeTooltip" class="performance-tooltip" style="display: none;">
+                                <div class="card bg-dark text-light">
+                                    <div class="card-body p-2">
+                                        <h6 class="card-title">Performance Mode</h6>
+                                        <p class="card-text small mb-1">Reduces visual effects to improve frame rates on older devices.</p>
+                                        <ul class="small ps-3 mb-0">
+                                            <li>Disables particle effects</li>
+                                            <li>Reduces visual animations</li>
+                                            <li>Limits background elements</li>
+                                            <li>Optimizes for gameplay over visuals</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cosmic UI Mood Lighting Selector -->
+                            <div class="mb-3 mt-4">
+                                <h5>Cosmic Mood Lighting:</h5>
+                                <div class="cosmic-themes-container">
+                                    <div class="cosmic-theme-options">
+                                        <div class="btn-group cosmic-theme-buttons" role="group" aria-label="Cosmic Theme selection">
+                                            <input type="radio" class="btn-check" name="cosmicTheme" id="themeDefault" value="default" checked>
+                                            <label class="btn cosmic-theme-btn default-theme" for="themeDefault" title="Default">
+                                                <span class="theme-color"></span>
+                                            </label>
+                                            
+                                            <input type="radio" class="btn-check" name="cosmicTheme" id="themeNebula" value="nebula">
+                                            <label class="btn cosmic-theme-btn nebula-theme" for="themeNebula" title="Nebula Dream">
+                                                <span class="theme-color"></span>
+                                            </label>
+                                            
+                                            <input type="radio" class="btn-check" name="cosmicTheme" id="themeVoid" value="void">
+                                            <label class="btn cosmic-theme-btn void-theme" for="themeVoid" title="Cosmic Void">
+                                                <span class="theme-color"></span>
+                                            </label>
+                                            
+                                            <input type="radio" class="btn-check" name="cosmicTheme" id="themeSolarFlare" value="solarFlare">
+                                            <label class="btn cosmic-theme-btn solar-flare-theme" for="themeSolarFlare" title="Solar Flare">
+                                                <span class="theme-color"></span>
+                                            </label>
+                                            
+                                            <input type="radio" class="btn-check" name="cosmicTheme" id="themeAurora" value="aurora">
+                                            <label class="btn cosmic-theme-btn aurora-theme" for="themeAurora" title="Aurora">
+                                                <span class="theme-color"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="theme-preview">
+                                        <div class="theme-preview-box">
+                                            <div class="theme-preview-ship"></div>
+                                            <div class="theme-preview-enemy"></div>
+                                            <div class="theme-preview-star star1"></div>
+                                            <div class="theme-preview-star star2"></div>
+                                            <div class="theme-preview-star star3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="welcome-buttons d-flex justify-content-center gap-3">
+                            <button class="btn btn-lg btn-primary animate-pulse" onclick="startGame()">
+                                <span class="btn-glow"></span>
+                                Start Game
+                            </button>
+                            <button class="btn btn-lg btn-outline-info" onclick="togglePatchNotes()">View Patch Notes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Patch Notes Modal -->
+        <div id="patchNotesModal" class="patch-notes-modal">
+            <div class="patch-notes-content">
+                <h2>Patch Notes</h2>
+                <div class="patch-notes-body">
+                    <div class="patch-version current-version">
+                        <h3>Alpha Version 1.3.2 Testing</h3>
+                        <ul>
+                            <li>NEW: Added Cosmic UI Mood Lighting Selector for customizing game visuals</li>
+                            <li>NEW: Multiple color themes including Nebula Dream, Cosmic Void, Solar Flare, and Aurora</li>
+                            <li>Power-ups now disabled during special events and converted to points</li>
+                            <li>Reduced game startup time by 50% for faster gameplay access</li>
+                            <li>Enhanced visual effects for damage boost power-up</li>
+                            <li>Streamlined power-up notifications to match achievement style</li>
+                            <li>Enhanced UI feedback and transitions throughout the game</li>
+                            <li>Improved performance during Radiant and Lunar events</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Alpha Version 1.3.0 Testing</h3>
+                        <ul>
+                            <li>Added Gravity-Defying UI Transitions with Cosmic Particle Effects</li>
+                            <li>Implemented physics-based particle animations for UI elements</li>
+                            <li>Added gravity wells that attract and repel particles</li>
+                            <li>Enhanced UI elements with hovering particle effects</li>
+                            <li>Added click effects with animated particle bursts</li>
+                            <li>Improved visual transitions between menus and gameplay</li>
+                            <li>Added animated SVG achievement badges with interactive effects</li>
+                            <li>Implemented comprehensive performance optimization mode toggle</li>
+                            <li>Added reduced particle effects for better performance on all devices</li>
+                            <li>Performance status now displays in the game HUD for better visibility</li>
+                            <li>Optimized enemy effects, explosions, and background particles</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Alpha Version 1.2.9 Testing</h3>
+                        <ul>
+                            <li>Added exciting new Lunar Event with blue-themed enemies</li>
+                            <li>Lunar enemies are 1.5x stronger than Radiant enemies</li>
+                            <li>Improved UI for event timers with centralized positioning</li>
+                            <li>Added special event announcement to the start menu</li>
+                            <li>Enhanced visual effects for both Radiant and Lunar events</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Alpha Version 1.2.8 Testing</h3>
+                        <ul>
+                            <li>Added adaptive enemy spawn reduction when lag is detected</li>
+                            <li>Implemented FPS monitoring with automatic performance adjustments</li>
+                            <li>Added performance metrics display in debug mode</li>
+                            <li>Dynamic balancing for smoother gameplay experience</li>
+                            <li>Gradual recovery when performance improves</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Alpha Version 1.2.7 Testing</h3>
+                        <ul>
+                            <li>Fixed performance issues during Radiant Event</li>
+                            <li>Optimized radiant enemy particle effects</li>
+                            <li>Reduced shadow calculations for better performance</li>
+                            <li>Implemented batch rendering for similar particle effects</li>
+                            <li>Improved memory management for particle systems</li>
+                            <li>Fixed variable name inconsistency in post-event state</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Alpha Version 1.2.6 Testing</h3>
+                        <ul>
+                            <li>Added dynamic cosmic background particles to game environment</li>
+                            <li>Enhanced particle animations with rotation and varying paths</li>
+                            <li>Improved visual effects throughout the game experience</li>
+                            <li>Added parallax effect in particle movement for depth perception</li>
+                            <li>Performance optimizations for smoother gameplay</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Alpha Version 1.2.4 Testing</h3>
+                        <ul>
+                            <li>Added interactive cosmic loading screen with star parallax</li>
+                            <li>Dynamic nebula clouds and responsive dust particles</li>
+                            <li>Enhanced real-time chat system with message animations</li>
+                            <li>Added emoji reactions to chat messages</li>
+                            <li>Improved UI with playful micro-animations</li>
+                            <li>Added chat notification and help system</li>
+                            <li>Bug fixes and performance improvements</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Version 1.1</h3>
+                        <ul>
+                            <li>Added welcome screen with controls information</li>
+                            <li>Enhanced ship upgrade tree visualization</li>
+                            <li>Improved ship progression system</li>
+                            <li>Added patch notes feature</li>
+                            <li>Various UI/UX improvements</li>
+                        </ul>
+                    </div>
+                    <div class="patch-version">
+                        <h3>Version 1.0</h3>
+                        <ul>
+                            <li>Initial game release</li>
+                            <li>Basic ship combat mechanics</li>
+                            <li>4 main ship classes with upgrades</li>
+                            <li>Score and multiplier system</li>
+                            <li>Dark/Light theme support</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-secondary mt-4" onclick="togglePatchNotes()">Close</button>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <!-- Cosmic particles container added for background effects -->
+            <div id="cosmic-particles-container"></div>
+            
+            <!-- Achievement System UI -->
+            <div class="achievement-notifications"></div>
+            
+            <!-- Achievement particles canvas -->
+            <canvas id="achievement-particles-canvas" class="achievement-particles"></canvas>
+            
+            <div class="achievement-screen" style="display: none;">
+                <div class="achievement-header">
+                    <h2>Achievements</h2>
+                    <div class="close-button" onclick="window.game.achievementSystem.toggleAchievementScreen()">×</div>
+                </div>
+                <div class="achievement-container">
+                    <!-- Achievement items will be added here dynamically -->
+                </div>
+            </div>
+            
+<!-- Theme toggle button removed -->
+            
+<!-- Achievement toggle button removed -->
+            <div class="ship-type-selector">
+                <button class="btn btn-outline-info mb-2" onclick="window.game.player.changeShipType('default')">Default Ship</button>
+                <button class="btn btn-outline-success mb-2" onclick="window.game.player.changeShipType('sniper')">Sniper</button>
+                <button class="btn btn-outline-primary mb-2" onclick="window.game.player.changeShipType('quasar')">Quasar</button>
+                <button class="btn btn-outline-warning mb-2" onclick="window.game.player.changeShipType('heavy')">Heavy</button>
+            </div>
+            <div class="hud">
+                <div class="hud-row">
+                    <div class="score"><span id="score">0</span></div>
+                    <div class="multiplier">x<span id="multiplier">1.0</span></div>
+                    <div class="difficulty-level"><span id="difficultyLevel">Adapting...</span></div>
+                </div>
+                <div class="auto-features">
+                    <div class="auto-feature">E: <span id="autoSpin">OFF</span></div>
+                    <div class="auto-feature">Q: <span id="autoShoot">OFF</span></div>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div id="gameOver" class="game-over d-none">
+                <h2>Game Over</h2>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <p id="newHighScore" class="text-success d-none">New High Score!</p>
+                
+                <div id="gameStats" class="game-stats mt-3">
+                    <div id="highScoreContainer" class="stat-container d-none">
+                        <div class="stat-label">High Score:</div>
+                        <div class="stat-value"><span id="highScoreValue">0</span></div>
+                    </div>
+                    
+                    <div id="survivalTimeContainer" class="stat-container d-none">
+                        <div class="stat-label">Survival Time:</div>
+                        <div class="stat-value"><span id="survivalTime">0:00</span></div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <button class="btn btn-primary btn-lg" onclick="restartGame()">Play Again</button>
+                    <button class="btn btn-secondary btn-lg ms-2" onclick="document.getElementById('gameOver').classList.add('d-none'); document.getElementById('welcomeModal').style.display = 'flex';">Main Menu</button>
+                </div>
+            </div>
+            <div class="version-info">
+                <div class="version-text">
+                    Alpha Version 1.3.2 Testing
+                    <button class="btn btn-sm btn-outline-secondary ms-2 version-notes-btn" onclick="togglePatchNotes()">📝</button>
+                </div>
+                <div class="version-subtitle">Cosmic UI Mood Lighting</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-bs-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-bs-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+    function togglePatchNotes() {
+        const modal = document.getElementById('patchNotesModal');
+        if (modal.style.display === 'flex') {
+            modal.style.display = 'none';
+        } else {
+            modal.style.display = 'flex';
+        }
+    }
+
+    // Initialize the cosmic loading screen at page load
+    window.cosmicLoader = null;
+    
+    // Initialize a global sound manager for both menu and game
+    window.globalSoundManager = null;
+    
+    function startGame() {
+        // Get selected difficulty
+        let selectedDifficulty = 'medium'; // Default
+        const difficultyOptions = document.querySelectorAll('input[name="difficulty"]');
+        difficultyOptions.forEach(option => {
+            if (option.checked) {
+                selectedDifficulty = option.value;
+            }
+        });
+        
+        // Get adaptive difficulty toggle state
+        const adaptiveDifficultyEnabled = document.getElementById('adaptiveDifficultyToggle').checked;
+        
+        // Get performance mode toggle state
+        const performanceModeEnabled = document.getElementById('performanceModeToggle').checked;
+        
+        // Store settings in localStorage to persist between sessions
+        localStorage.setItem('selectedDifficulty', selectedDifficulty);
+        localStorage.setItem('adaptiveDifficultyEnabled', adaptiveDifficultyEnabled);
+        localStorage.setItem('performanceMode', performanceModeEnabled);
+        
+        // Hide welcome modal
+        document.getElementById('welcomeModal').style.display = 'none';
+        
+        // Initialize cosmic loading screen if it doesn't exist
+        if (!window.cosmicLoader) {
+            window.cosmicLoader = new CosmicLoadingScreen();
+            window.cosmicLoader.initialize();
+        }
+        
+        // Show the cosmic loading screen
+        window.cosmicLoader.show(() => {
+            // This callback function is called when loading is complete
+            if (window.game) {
+                window.game.paused = false;
+                
+                // Apply selected difficulty settings to game
+                window.game.setDifficulty(selectedDifficulty, adaptiveDifficultyEnabled);
+            }
+        });
+        
+        // Simulate loading process (this would normally be replaced with actual asset loading)
+        window.simulateGameLoading();
+    }
+    
+    // Simulated game loading function (make it globally accessible)
+    window.simulateGameLoading = function() {
+        let progress = 0;
+        const totalSteps = 5; // Reduced from 10 to 5 steps
+        const stepTime = 150; // Reduced from 300ms to 150ms per step
+        
+        // Update the loading progress every stepTime ms
+        const loadingInterval = setInterval(() => {
+            progress += 1;
+            window.cosmicLoader.setProgress(progress / totalSteps);
+            
+            // When loading is complete
+            if (progress >= totalSteps) {
+                clearInterval(loadingInterval);
+            }
+        }, stepTime);
+    }
+
+    // Apply saved theme and difficulty settings on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        }
+        
+        // Load saved difficulty settings
+        const savedDifficulty = localStorage.getItem('selectedDifficulty');
+        if (savedDifficulty) {
+            const difficultyOption = document.getElementById(`difficulty${savedDifficulty.charAt(0).toUpperCase() + savedDifficulty.slice(1)}`);
+            if (difficultyOption) {
+                difficultyOption.checked = true;
+            }
+        }
+        
+        // Load saved adaptive difficulty toggle state
+        const savedAdaptiveDifficulty = localStorage.getItem('adaptiveDifficultyEnabled');
+        if (savedAdaptiveDifficulty !== null) {
+            document.getElementById('adaptiveDifficultyToggle').checked = savedAdaptiveDifficulty === 'true';
+        }
+        
+        // Load saved performance mode state
+        const savedPerformanceMode = localStorage.getItem('performanceMode');
+        if (savedPerformanceMode !== null) {
+            document.getElementById('performanceModeToggle').checked = savedPerformanceMode === 'true';
+        }
+        
+        // Initialize patch notes modal as hidden
+        document.getElementById('patchNotesModal').style.display = 'none';
+        
+        // Setup performance mode tooltip
+        const performanceModeInfo = document.getElementById('performanceModeInfo');
+        const performanceModeTooltip = document.getElementById('performanceModeTooltip');
+        
+        if (performanceModeInfo && performanceModeTooltip) {
+            performanceModeInfo.addEventListener('mouseenter', () => {
+                performanceModeTooltip.style.display = 'block';
+            });
+            
+            performanceModeInfo.addEventListener('mouseleave', () => {
+                performanceModeTooltip.style.display = 'none';
+            });
+            
+            // Also handle click for mobile devices
+            performanceModeInfo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (performanceModeTooltip.style.display === 'none') {
+                    performanceModeTooltip.style.display = 'block';
+                    
+                    // Hide tooltip when clicking elsewhere
+                    const hideTooltip = () => {
+                        performanceModeTooltip.style.display = 'none';
+                        document.removeEventListener('click', hideTooltip);
+                    };
+                    
+                    setTimeout(() => {
+                        document.addEventListener('click', hideTooltip);
+                    }, 100);
+                } else {
+                    performanceModeTooltip.style.display = 'none';
+                }
+            });
+        }
+        
+        // Setup performance mode toggle event listener
+        document.getElementById('performanceModeToggle').addEventListener('change', function() {
+            localStorage.setItem('performanceMode', this.checked);
+            
+            // Update game performance settings if the game is running
+            if (window.game) {
+                window.game.performanceMode = this.checked;
+                if (this.checked) {
+                    window.game.applyPerformanceModeSettings();
+                    console.log('Performance mode enabled - reducing graphical effects');
+                } else {
+                    // Reload the game to disable performance mode
+                    // This is simpler than trying to restore all graphical effects
+                    location.reload();
+                }
+            }
+        });
+        
+        // Initialize welcome screen particles
+        initWelcomeParticles();
+        
+        // Initialize cosmic transitions system
+        if (window.cosmicTransitions) {
+            window.cosmicTransitions.initialize();
+            window.cosmicTransitions.enhanceGameUI();
+            
+            // Add cosmic transitions to important UI elements
+            const importantElements = [
+                ...document.querySelectorAll('.achievement-header h2'),
+                ...document.querySelectorAll('.game-title'),
+                ...document.querySelectorAll('.patch-notes-content h2')
+            ];
+            
+            importantElements.forEach(element => {
+                window.cosmicTransitions.createFloatingEffect(element, {
+                    colors: window.cosmicTransitions.colorPalettes.cosmic,
+                    particleRate: 0.05,
+                    particleCount: 5
+                });
+            });
+            
+            // Add transition between start and game
+            const startButton = document.querySelector('.btn-primary.animate-pulse');
+            const gameCanvas = document.getElementById('gameCanvas');
+            
+            if (startButton && gameCanvas) {
+                startButton.setAttribute('data-transition-to', 'gameCanvas');
+            }
+            
+            // Add click effects to all buttons
+            document.querySelectorAll('button, .btn').forEach(button => {
+                window.cosmicTransitions.addElementClickEffect(button);
+                window.cosmicTransitions.addElementHoverEffect(button);
+            });
+            
+            // Add cosmic page transition when game starts
+            const originalStartGame = window.startGame;
+            window.startGame = function() {
+                window.cosmicTransitions.createPageTransition('out', {
+                    type: 'cosmic',
+                    duration: 1000,
+                    callback: () => {
+                        originalStartGame();
+                    }
+                });
+            };
+        }
+        
+        // Initialize sound manager for main menu music
+        try {
+            if (!window.globalSoundManager) {
+                window.globalSoundManager = new SoundManager();
+                
+                // Start music when user interacts with the page
+                document.addEventListener('click', async () => {
+                    if (window.globalSoundManager && !window.globalSoundManager.initialized) {
+                        await window.globalSoundManager.initialize();
+                    }
+                }, { once: true });
+            }
+        } catch (error) {
+            console.error('Error initializing sound manager:', error);
+        }
+        
+        // Add ESC key handler to close patch notes modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('patchNotesModal');
+                if (modal.style.display === 'flex') {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    });
+    
+    // Welcome screen particles function
+    function initWelcomeParticles() {
+        // Create canvas for welcome screen particles
+        const canvas = document.createElement('canvas');
+        canvas.id = 'welcome-particles-canvas';
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.zIndex = '-1';
+        document.getElementById('welcomeModal').appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        const stars = [];
+        const nebulaClouds = [];
+        
+        // Set canvas dimensions
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Create stars
+        for (let i = 0; i < 100; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5 + 0.5,
+                opacity: Math.random() * 0.8 + 0.2,
+                blinkRate: Math.random() * 0.02 + 0.005,
+                blinkDirection: Math.random() > 0.5 ? 1 : -1
+            });
+        }
+        
+        // Create dust particles
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: (Math.random() - 0.5) * 0.5,
+                speedY: (Math.random() - 0.5) * 0.5,
+                opacity: Math.random() * 0.5 + 0.2,
+                color: Math.random() > 0.7 ? 'rgba(100, 200, 255, ' : 'rgba(255, 255, 255, '
+            });
+        }
+        
+        // Create nebula clouds
+        for (let i = 0; i < 5; i++) {
+            nebulaClouds.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 300 + 200,
+                opacity: Math.random() * 0.07 + 0.03,
+                speedX: (Math.random() - 0.5) * 0.1,
+                speedY: (Math.random() - 0.5) * 0.1,
+                color: Math.random() > 0.5 ? 
+                    `rgba(70, 150, 255, $opacity)` : 
+                    `rgba(255, 100, 150, $opacity)`
+            });
+        }
+        
+        // Animation function
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw nebula clouds
+            nebulaClouds.forEach(cloud => {
+                const gradient = ctx.createRadialGradient(
+                    cloud.x, cloud.y, 0, 
+                    cloud.x, cloud.y, cloud.size
+                );
+                const color = cloud.color.replace('$opacity', cloud.opacity.toString());
+                gradient.addColorStop(0, color);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                
+                ctx.beginPath();
+                ctx.fillStyle = gradient;
+                ctx.arc(cloud.x, cloud.y, cloud.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Move nebula clouds
+                cloud.x += cloud.speedX;
+                cloud.y += cloud.speedY;
+                
+                // Wrap around screen
+                if (cloud.x < -cloud.size) cloud.x = canvas.width + cloud.size;
+                if (cloud.x > canvas.width + cloud.size) cloud.x = -cloud.size;
+                if (cloud.y < -cloud.size) cloud.y = canvas.height + cloud.size;
+                if (cloud.y > canvas.height + cloud.size) cloud.y = -cloud.size;
+            });
+            
+            // Draw stars
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Make stars blink
+                star.opacity += star.blinkRate * star.blinkDirection;
+                if (star.opacity > 1 || star.opacity < 0.2) {
+                    star.blinkDirection *= -1;
+                }
+            });
+            
+            // Draw particles
+            particles.forEach(particle => {
+                ctx.beginPath();
+                ctx.fillStyle = `${particle.color}${particle.opacity})`;
+                ctx.rect(particle.x, particle.y, particle.size, particle.size);
+                ctx.fill();
+                
+                // Move particles
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                
+                // Wrap around screen
+                if (particle.x < 0) particle.x = canvas.width;
+                if (particle.x > canvas.width) particle.x = 0;
+                if (particle.y < 0) particle.y = canvas.height;
+                if (particle.y > canvas.height) particle.y = 0;
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Start animation
+        animate();
+    }
+    </script>
+
+    <script src="{{ url_for('static', filename='js/loading_screen.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cosmic_transitions.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sound_manager.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/enemy.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/projectile.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/icezone.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dimension.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/powerup.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/upgrade_effects.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/upgrades.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/debug.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/upgrade_tree.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/star_map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/multiplayer_manager.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat_system.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/achievement_particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/achievement_badges.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/achievement_system.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/shiptype.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cosmic_theme_selector.js') }}"></script>
+</body>
+</html>
